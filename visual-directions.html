@@ -959,6 +959,81 @@
   text-transform: uppercase;
   color: rgba(248,245,240,.25);
 }
+
+/* ══════════════════════════════════════════════════════════
+   MOBILE — shared breakpoint for all three directions
+══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  .switcher {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 8px 14px;
+  }
+  .sw-btn { padding: 6px 16px; font-size: 12px; white-space: nowrap; }
+
+  /* Direction 1 — الختم */
+  .d1-nav { padding: 0 20px; height: 60px; top: 41px; }
+  .d1-nav-logo { font-size: 16px; }
+  .d1-nav-links { gap: 16px; }
+  .d1-nav-links a { font-size: 13px; }
+  .d1-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 48px 20px;
+    gap: 48px;
+  }
+  .d1-seal-col { order: -1; }
+  .d1-seal-wrap { width: 220px; height: 220px; }
+  .d1-seal-center-ar { font-size: 38px; }
+  .d1-services, .d1-contact { padding: 56px 20px; }
+  .d1-services-grid { grid-template-columns: 1fr; }
+  .d1-about {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 64px 20px;
+  }
+  .d1-footer { padding: 24px 20px; font-size: 11px; line-height: 1.6; }
+
+  /* Direction 2 — ق */
+  .d2-nav { padding: 0 20px; height: 56px; top: 41px; }
+  .d2-nav-links { gap: 16px; }
+  .d2-nav-links a { font-size: 11px; }
+  .d2-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 48px 20px;
+    gap: 8px;
+  }
+  .d2-hero-text { padding: 0; }
+  .d2-hero-glyph { display: none; }
+  .d2-cta-row { flex-wrap: wrap; }
+  .d2-services, .d2-about { padding: 56px 20px; }
+  .d2-services-grid { grid-template-columns: 1fr; }
+  .d2-about-inner { grid-template-columns: 1fr; gap: 40px; }
+  .d2-footer { flex-direction: column; gap: 12px; padding: 24px 20px; text-align: center; }
+
+  /* Direction 3 — الأخضر العدلي */
+  .d3-topbar { flex-direction: column; gap: 4px; padding: 8px 20px; text-align: center; top: 41px; }
+  .d3-nav { padding: 0 20px; height: 64px; }
+  .d3-nav-links { gap: 16px; }
+  .d3-nav-links a { font-size: 11px; }
+  .d3-hero { grid-template-columns: 1fr; min-height: auto; }
+  .d3-hero-text { padding: 48px 20px; }
+  .d3-hero-accent {
+    padding: 32px 20px;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .d3-year-ghost { display: none; }
+  .d3-services, .d3-about { padding: 56px 20px; }
+  .d3-services-grid { grid-template-columns: 1fr; }
+  .d3-about-inner { grid-template-columns: 1fr; gap: 40px; }
+  .d3-footer { flex-direction: column; gap: 8px; padding: 24px 20px; text-align: center; }
+}
 </style>
 </head>
 <body>
