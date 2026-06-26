@@ -359,6 +359,16 @@ textarea.form-control { resize: vertical; min-height: 110px; }
 .form-status { margin-top: 18px; font-size: 14px; line-height: 1.6; min-height: 1em; }
 .form-status.ok { color: var(--gold); }
 .form-status.err { color: #E0603C; }
+.form-status-msg { display: block; margin-bottom: 12px; }
+.form-wa-cta {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 11px 22px; border-radius: 999px;
+  background: #25D366; color: #0A2E1A; font-weight: 700;
+  font-size: 14px; text-decoration: none;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.form-wa-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37,211,102,.32); }
+.form-wa-cta:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
 .contact-info { display: flex; flex-direction: column; }
 .info-card { display: flex; gap: 16px; align-items: flex-start; padding: 24px 0; border-bottom: 1px solid var(--rule); }
@@ -789,7 +799,8 @@ var I18N = {
     "form.submit": "إرسال الطلب", "form.sending": "جارٍ الإرسال…",
     "form.invalid": "يرجى تعبئة جميع الحقول المطلوبة بشكل صحيح.",
     "form.ok": "تم استلام طلبك بنجاح، وسيتم التواصل معك في أقرب وقت.",
-    "form.wa": "تم فتح واتساب لإرسال طلبك. إذا لم يفتح، تواصل معنا مباشرة عبر الزر الأخضر.",
+    "form.wa": "تم تجهيز طلبك. اضغط الزر أدناه لإرساله عبر واتساب.",
+    "form.waBtn": "إرسال عبر واتساب",
     "form.err": "تعذّر إرسال الطلب. يرجى المحاولة مجددًا أو التواصل عبر واتساب.",
     "info.addr": "العنوان", "info.addrVal": "الشميساني، عمّان، الأردن", "info.map": "عرض على الخريطة ←",
     "info.phone": "الهاتف", "info.email": "البريد الإلكتروني",
@@ -834,7 +845,8 @@ var I18N = {
     "form.submit": "Send Request", "form.sending": "Sending…",
     "form.invalid": "Please fill in all required fields correctly.",
     "form.ok": "Your request has been received. We will contact you as soon as possible.",
-    "form.wa": "WhatsApp has opened to send your request. If it didn't, contact us directly via the green button.",
+    "form.wa": "Your request is ready. Tap the button below to send it via WhatsApp.",
+    "form.waBtn": "Send via WhatsApp",
     "form.err": "Could not send your request. Please try again or contact us via WhatsApp.",
     "info.addr": "Address", "info.addrVal": "Shmeisani, Amman, Jordan", "info.map": "View on map →",
     "info.phone": "Phone", "info.email": "Email",
@@ -946,9 +958,18 @@ var WHATSAPP_NUMBER = "962799574933";
         '%0A' + t('_waEmail') + ': ' + encodeURIComponent(d.email) +
         '%0A' + t('_waType') + ': ' + encodeURIComponent(d.type) +
         '%0A' + t('_waSubject') + ': ' + encodeURIComponent(d.message);
-      window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + text, '_blank');
-      form.reset();
-      status.className = 'form-status ok'; status.textContent = t('form.wa');
+      var waUrl = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + text;
+      status.className = 'form-status ok';
+      status.innerHTML = '<span class="form-status-msg">' + t('form.wa') + '</span>' +
+        '<a class="form-wa-cta" href="' + waUrl + '" target="_blank" rel="noopener">' +
+        '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.82 11.82 0 018.413 3.488 11.82 11.82 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.788-.607zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>' +
+        '<span>' + t('form.waBtn') + '</span></a>';
+      var cta = status.querySelector('.form-wa-cta');
+      cta.addEventListener('click', function () {
+        form.reset();
+        status.className = 'form-status'; status.textContent = '';
+      });
+      cta.focus();
       return;
     }
 
